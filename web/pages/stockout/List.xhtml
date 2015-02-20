@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListStockoutTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <p:panel style="width: 30%; border: none; margin: auto; text-align: center; background-color: white!important ">
+                <h:outputText value="Outgoing Stock" style="font-size: xx-large!important; color: #4285F4; font-family: sans-serif; "/>
+            </p:panel>
+            
+            <h:form id="StockoutListForm">
+                    <p:dataTable id="datalist" value="#{stockoutController.items}" var="item"
+                                 selectionMode="single" selection="#{stockoutController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.stockOutId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        
+                        <f:facet name="header">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Issue Out Stock" actionListener="#{stockoutController.prepareCreate}" update=":StockoutCreateForm" oncomplete="PF('StockoutCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":StockoutViewForm" oncomplete="PF('StockoutViewDialog').show()" disabled="#{empty stockoutController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":StockoutEditForm" oncomplete="PF('StockoutEditDialog').show()" disabled="#{empty stockoutController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete} " actionListener="#{stockoutController.destroy}" update=":growl,datalist" disabled="#{empty stockoutController.selected}"/>
+                        </f:facet>
+                        
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                      
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="No."/>
+                            </f:facet>
+                            <h:outputText value="#{item.stockOutId}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.itemdescriptionId.itemId.itemName.concat(' - ').concat(item.itemdescriptionId.itemSize)}" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Item Description"/>
+                            </f:facet>
+                            <h:outputText value="#{item.itemdescriptionId.itemId.itemName.concat(' - ').concat(item.itemdescriptionId.itemSize)}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStockoutTitle_quantity}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.quantity}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Issued by"/>
+                            </f:facet>
+                            <h:outputText value="#{item.issuedbyuserId.firstName.concat(' ').concat(item.issuedbyuserId.lastName)}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Despatched by"/>
+                            </f:facet>
+                            <h:outputText value="#{item.despatchedbyuserId.firstName.concat(' ').concat(item.despatchedbyuserId.lastName)}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.takentositeId.siteName}">
+                            <f:facet name="header">
+                                <h:outputText value="Taken to Site"/>
+                            </f:facet>
+                            <h:outputText value="#{item.takentositeId.siteName}"/>
+                        </p:column>
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListStockoutTitle_vehicleNumber}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.vehicleNumber}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Date Taken"/>
+                            </f:facet>
+                            <h:outputText value="#{item.autostamp}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                            </h:outputText>
+                        </p:column>   
+                    </p:dataTable>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

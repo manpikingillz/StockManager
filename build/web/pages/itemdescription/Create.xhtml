@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ItemdescriptionCreateDlg" widgetVar="ItemdescriptionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateItemdescriptionTitle}">
+            <h:form id="ItemdescriptionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{itemdescriptionController.selected != null}">
+                        <p:outputLabel value="Item Name" for="itemId" />
+                        <p:selectOneMenu id="itemId" value="#{itemdescriptionController.selected.itemId}" required="true" requiredMessage="#{bundle.EditItemdescriptionRequiredMessage_itemId}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{itemController.itemsAvailableSelectOne}"
+                                           var="itemIdItem"
+                                           itemValue="#{itemIdItem}"
+                                           itemLabel="#{itemIdItem.itemName}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateItemdescriptionLabel_itemSize}" for="itemSize" />
+                        <p:inputText id="itemSize" value="#{itemdescriptionController.selected.itemSize}" title="#{bundle.CreateItemdescriptionTitle_itemSize}" required="true" requiredMessage="#{bundle.CreateItemdescriptionRequiredMessage_itemSize}"/>
+                        <p:outputLabel value="#{bundle.CreateItemdescriptionLabel_remarks}" for="remarks" />
+                        <p:inputText id="remarks" value="#{itemdescriptionController.selected.remarks}" title="#{bundle.CreateItemdescriptionTitle_remarks}" />
+                    </p:panelGrid>
+                    <p:commandButton action="#{itemdescriptionController.create}" value="#{bundle.Save}" update="display,:ItemdescriptionListForm:datalist,:growl" oncomplete="handleSubmit(args,'ItemdescriptionCreateDialog');">
+                        <f:setPropertyActionListener target="#{itemdescriptionController.selected.balance}" value="#{0}"/>
+                    </p:commandButton>
+                        <p:commandButton value="#{bundle.Cancel}" onclick="ItemdescriptionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StockinEditDlg" widgetVar="StockinEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Edit Incoming Stock">
+            <h:form id="StockinEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{stockinController.selected != null}">
+                        <p:outputLabel value="Item Description" for="itemdescriptionId" />
+                        <p:selectOneMenu id="itemdescriptionId" value="#{stockinController.selected.itemdescriptionId}" required="true" requiredMessage="#{bundle.EditStockinRequiredMessage_itemdescriptionId}" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{itemdescriptionController.itemsAvailableSelectOne}"
+                                           var="itemdescriptionIdItem"
+                                           itemValue="#{itemdescriptionIdItem}"
+                                           itemLabel="#{itemdescriptionIdItem.itemId.itemName.concat(' - ').concat(itemdescriptionIdItem.itemSize)}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateStockinLabel_quantity}" for="quantity" />
+                        <p:inputText id="quantity" value="#{stockinController.selected.quantity}" title="#{bundle.CreateStockinTitle_quantity}" />
+                        <p:outputLabel value="Received by" for="receivedbyuserId" />
+                        <p:selectOneMenu id="receivedbyuserId" value="#{stockinController.selected.receivedbyuserId}" required="true" requiredMessage="#{bundle.EditStockinRequiredMessage_receivedbyuserId}">
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="receivedbyuserIdItem"
+                                           itemValue="#{receivedbyuserIdItem}"
+                                           itemLabel="#{receivedbyuserIdItem.firstName.concat(' ').concat(receivedbyuserIdItem.lastName)}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Delivered by" for="deliveredbyuserId" />
+                        <p:selectOneMenu id="deliveredbyuserId" value="#{stockinController.selected.deliveredbyuserId}" required="true" requiredMessage="#{bundle.EditStockinRequiredMessage_deliveredbyuserId}">
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="deliveredbyuserIdItem"
+                                           itemValue="#{deliveredbyuserIdItem}"
+                                           itemLabel="#{deliveredbyuserIdItem.firstName.concat(' ').concat(deliveredbyuserIdItem.lastName)}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateStockinLabel_goodsReceivedNoteNumber}" for="goodsReceivedNoteNumber" />
+                        <p:inputText id="goodsReceivedNoteNumber" value="#{stockinController.selected.goodsReceivedNoteNumber}" title="#{bundle.CreateStockinTitle_goodsReceivedNoteNumber}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateStockinLabel_remarks}" for="remarks" />
+                        <p:inputText id="remarks" value="#{stockinController.selected.remarks}" title="#{bundle.CreateStockinTitle_remarks}" />
+                        
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{stockinController.update}" value="#{bundle.Save}" update="display,:StockinListForm:datalist,:growl" oncomplete="handleSubmit(args, 'StockinEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="StockinEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

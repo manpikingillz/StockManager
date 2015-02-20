@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
+<glassfish-web-app error-url="">
+  <security-role-mapping>
+    <role-name>Managing Director</role-name>
+    <group-name>Managing Director</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Mechanical Engineer</role-name>
+    <group-name>Mechanical Engineer</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Procument Officer</role-name>
+    <group-name>Procurement Officer</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Store Manager</role-name>
+    <group-name>Store Manager</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Technical Director</role-name>
+    <group-name>Technical Director</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>Procurement Officer</role-name>
+    <group-name>Procurement Officer</group-name>
+  </security-role-mapping>
+  <class-loader delegate="true"/>
+  <jsp-config>
+    <property name="keepgenerated" value="true">
+      <description>Keep a copy of the generated servlet class' java code.</description>
+    </property>
+  </jsp-config>
+</glassfish-web-app>

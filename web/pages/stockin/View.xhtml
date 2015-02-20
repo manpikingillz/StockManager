@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StockinViewDlg" widgetVar="StockinViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewStockinTitle}">
+            <h:form id="StockinViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{stockinController.selected != null}">
+                        <h:outputText value="#{bundle.ViewStockinLabel_stockInId}"/>
+                        <h:outputText value="#{stockinController.selected.stockInId}" title="#{bundle.ViewStockinTitle_stockInId}"/>
+                        <h:outputText value="Item Description"/>
+                        <h:outputText value="#{stockinController.selected.itemdescriptionId.itemId.itemName.concat(' - ').concat(stockinController.selected.itemdescriptionId.itemSize)}" title="#{bundle.ViewStockinTitle_itemdescriptionId}"/>
+                        <h:outputText value="#{bundle.ViewStockinLabel_quantity}"/>
+                        <h:outputText value="#{stockinController.selected.quantity}" title="#{bundle.ViewStockinTitle_quantity}"/>
+                        <h:outputText value="Received by"/>
+                        <h:outputText value="#{stockinController.selected.receivedbyuserId.firstName.concat(' - ').concat(stockinController.selected.receivedbyuserId.lastName)}" title="#{bundle.ViewStockinTitle_receivedbyuserId}"/>
+                        <h:outputText value="Delivered by"/>
+                        <h:outputText value="#{stockinController.selected.deliveredbyuserId.firstName.concat(' - ').concat(stockinController.selected.deliveredbyuserId.lastName)}" title="#{bundle.ViewStockinTitle_deliveredbyuserId}"/>
+                        <h:outputText value="#{bundle.ViewStockinLabel_goodsReceivedNoteNumber}"/>
+                        <h:outputText value="#{stockinController.selected.goodsReceivedNoteNumber}" title="#{bundle.ViewStockinTitle_goodsReceivedNoteNumber}"/>
+                        
+                        <h:outputText value="#{bundle.ViewStockinLabel_remarks}"/>
+                        <h:outputText value="#{stockinController.selected.remarks}" title="#{bundle.ViewStockinTitle_remarks}"/>
+                        <h:outputText value="Date Recorded"/>
+                        <h:outputText value="#{stockinController.selected.autostamp}" title="#{bundle.ViewStockinTitle_autostamp}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="StockinViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

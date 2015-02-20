@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>CROPS IMPROVEMENT TRACKING SYSTEM</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+    </h:head>
+    <h:body style="background-color: #F1F1F1">
+            <p:layout fullPage="true">
+                <p:layoutUnit position="center">
+                    <h:panelGroup layout="block" style="width: 50%; margin: auto;">
+                        <h:panelGrid columns="1">
+                            <p:panel style=" margin-top: 50px" styleClass="loginTopPanel">
+
+                                <h:panelGroup>
+                                    <h:panelGrid columns="3">
+
+                                        <h:panelGroup style="border-style: none!important">    
+                                            <p:graphicImage library="resources" value="/resources/images/VambecoLogo.jpg"  style="height: 50px" />
+                                        </h:panelGroup> 
+
+                                        <h:panelGroup layout="block" style="text-align: center">       
+                                            <h:outputText value=" STOCK MANAGEMENT " style="font-size: large; font-weight: bolder; color: #4285F4;" />
+                                            <!--<br/>-->
+                                            <h:outputText value=" SYSTEM" style="font-size: large; font-weight: bolder; color: #4285F4" />
+                                        </h:panelGroup>
+
+<!--                                        <h:panelGroup>       
+                                            <p:graphicImage value="/resources/images/naro_logo.png" style="width: 50px"/><p:spacer width="20px"/>
+                                        </h:panelGroup>-->
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                            </p:panel>
+                            <p:panel  style="margin-top: 20px; border-radius: 4em" styleClass="loginTopPanel">
+                                <h:panelGroup layout="block" style="text-align: left; margin: 20px 20px 20px 20px">
+                                    <h:panelGroup layout="block" style="text-align: center">
+                                        <h:outputText value="SYSTEM LOGIN" style="color: black; font-weight: bolder "/>
+                                    </h:panelGroup>
+                                    <p:separator/>
+                                    <h:form id="loginForm">
+                                        <p:growl id="msg" showDetail="true" life="6000"  />
+                                        <h:panelGrid columns="1" style="width: 100%">
+                                            <p:inputText  style="border-radius: 0.0em; background: #feffff url(resources/images/loginInputLogo.png) no-repeat!important;padding: 15px 15px 15px 30px; background-position: 5px -2px !important; width: 90%!important; border-radius: 5px; border: 1px solid rgb(204,204,204); color: black; " placeholder="Username"/>
+                                            <p:password  style="border-radius: 0.0em; background: #feffff url(resources/images/loginInputLogo.png) no-repeat!important;padding: 15px 15px 15px 30px; background-position: 5px -52px !important; width: 90%!important; border-radius: 5px; border: 1px solid rgb(204,204,204)" placeholder="Password"/>
+                                            <h:panelGroup>
+                                                <p:commandButton value="Login"  action="/template.xhtml" style="width: 100px; height:40px;border-radius: 0.0em; margin-top: 20px; border-radius: 5px;"/>
+                                                <!--<h:outputText value="Forgot Password?" style="color: black; margin-left: 40%" title="Please Contact your Systems Administrator"/>-->
+                                            </h:panelGroup>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </h:panelGroup>
+                            </p:panel>
+                        </h:panelGrid>
+                        <h:panelGroup layout="block" style="margin-top: 40px">
+                            <h:outputText value="Copyright &copy;&nbsp;All rights reserved" style="color: gray"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </p:layoutUnit>
+            </p:layout>
+    </h:body>
+</html>
+
+
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      >
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListItemdescriptionTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <p:panel style="width: 30%; border: none; margin: auto; text-align: center; background-color: white!important ">
+                <h:outputText value="Stock List" style="font-size: xx-large!important; color: #4285F4; font-family: sans-serif; "/>
+            </p:panel>
+
+            <p:spacer height="10px" width="0px"/>
+            <h:form id="ItemdescriptionListForm">
+
+                <p:panel>
+                        <p:commandLink id="pdf" ajax="false">  
+                            <p:graphicImage value="/resources/images/pdf.png"/>
+                            <h:outputText value="Export to PDF"/>
+                            <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
+                            <pe:exporter type="pdf" target="stocklist" fileName="stocklist" facetBackground="#E1E1E1"  
+                                         datasetPadding="4"/>  
+
+                        </p:commandLink> 
+                        
+                        <p:spacer width="20"/>  
+
+                        <p:commandLink id="xls" ajax="false">  
+                            <p:graphicImage value="/resources/images/excel.png"/>  
+                            <h:outputText value="Export to Excel"/>
+                            <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
+                            <pe:exporter type="xlsx" target="stocklist" fileName="stocklist" facetBackground="#AAFFBB"  
+                                         datasetPadding="4"/>  
+
+                        </p:commandLink>  
+                </p:panel>
+                <p:spacer height="20px"/>
+                <p:dataTable id="stocklist" var="item" value="#{itemController.items}">  
+                    <f:facet name="header">  
+                        <h:outputText value="STOCK BALANCE "/>
+                        <h:outputText value="#{stockinController.currentDateTime}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                    </f:facet>  
+
+                    <p:column style="width:2%" exportable="false">  
+                        <p:rowToggler />  
+                    </p:column> 
+                    <p:column filterBy="#{item.itemName}" filterMatchMode="contains" sortBy="#{item.itemName}">
+                        <f:facet name="header">
+                            <h:outputText value="Item Description"/>
+                            <h:outputText value=" ( Expand Rows to see detailed information) " style="font-style: italic; color: darkgoldenrod; font-size: small"/>
+                        </f:facet>
+                        <h:outputText value="#{item.itemName}"/>
+                    </p:column>
+
+                    <p:rowExpansion>  
+                        <p:dataTable id="itemdescriptionList" var="itemdescription" value="#{item.itemdescriptionCollection}" style="width:300px;" >  
+                            <p:column>  
+                                
+                                <h:outputText  value="#{itemdescription.itemdescriptionId}" />  
+                            </p:column>
+                            
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Item Size"></h:outputText>  
+                                </f:facet>  
+                                <h:outputText  value="#{itemdescription.itemSize}" />  
+                            </p:column>  
+                            <p:column>  
+                                <f:facet name="header">  
+                                    <h:outputText value="Balance"></h:outputText>  
+                                </f:facet>  
+                                <h:outputText  value="#{itemdescription.balance}" />  
+                            </p:column>    
+                        </p:dataTable>  
+
+                    </p:rowExpansion>  
+                </p:dataTable>  
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

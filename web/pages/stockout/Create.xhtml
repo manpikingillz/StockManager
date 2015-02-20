@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="StockoutCreateDlg" widgetVar="StockoutCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Issue Out Stock">
+            <h:form id="StockoutCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{stockoutController.selected != null}">
+                        <p:outputLabel value="Item Description" for="itemdescriptionId" />
+                        <p:selectOneMenu id="itemdescriptionId" value="#{stockoutController.selected.itemdescriptionId}" required="true" requiredMessage="#{bundle.EditStockoutRequiredMessage_itemdescriptionId}" filter="true" filterMatchMode="contains">
+                            <f:selectItem itemLabel="Select Item" noSelectionOption="true"/>
+                            <f:selectItems value="#{itemdescriptionController.itemsAvailableSelectOne}"
+                                           var="itemdescriptionIdItem"
+                                           itemValue="#{itemdescriptionIdItem}"
+                                           itemLabel="#{itemdescriptionIdItem.itemId.itemName.concat(' - ').concat(itemdescriptionIdItem.itemSize).concat(' ( ').concat(itemdescriptionIdItem.balance).concat(' )')}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateStockoutLabel_quantity}" for="quantity" />
+                        <p:inputText id="quantity" value="#{stockoutController.selected.quantity}" title="#{bundle.CreateStockoutTitle_quantity}" />
+                        <p:outputLabel value="Issued by" for="issuedbyuserId" />
+                        <p:selectOneMenu id="issuedbyuserId" value="#{stockoutController.selected.issuedbyuserId}" required="true" requiredMessage="#{bundle.EditStockoutRequiredMessage_issuedbyuserId}">
+                            <f:selectItem itemLabel="Select Employee" noSelectionOption="true"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="issuedbyuserIdItem"
+                                           itemValue="#{issuedbyuserIdItem}"
+                                           itemLabel="#{issuedbyuserIdItem.firstName.concat(' ').concat(issuedbyuserIdItem.lastName)}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Despatched by" for="despatchedbyuserId" />
+                        <p:selectOneMenu id="despatchedbyuserId" value="#{stockoutController.selected.despatchedbyuserId}" required="true" requiredMessage="#{bundle.EditStockoutRequiredMessage_despatchedbyuserId}">
+                            <f:selectItem itemLabel="Select Employee" noSelectionOption="true"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="despatchedbyuserIdItem"
+                                           itemValue="#{despatchedbyuserIdItem}"
+                                           itemLabel="#{despatchedbyuserIdItem.firstName.concat(' ').concat(despatchedbyuserIdItem.lastName)}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Being taken to Site" for="takentositeId" />
+                        <p:selectOneMenu id="takentositeId" value="#{stockoutController.selected.takentositeId}" required="true" requiredMessage="#{bundle.EditStockoutRequiredMessage_takentositeId}">
+                            <f:selectItem itemLabel="Select Site" noSelectionOption="true"/>
+                            <f:selectItems value="#{siteController.itemsAvailableSelectOne}"
+                                           var="takentositeIdItem"
+                                           itemValue="#{takentositeIdItem}"
+                                           itemLabel="#{takentositeIdItem.siteName}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateStockoutLabel_vehicleNumber}" for="vehicleNumber" />
+                        <p:inputText id="vehicleNumber" value="#{stockoutController.selected.vehicleNumber}" title="#{bundle.CreateStockoutTitle_vehicleNumber}" />
+                        <p:outputLabel value="#{bundle.CreateStockoutLabel_deliveryNoteNumber}" for="deliveryNoteNumber" />
+                        <p:inputText id="deliveryNoteNumber" value="#{stockoutController.selected.deliveryNoteNumber}" title="#{bundle.CreateStockoutTitle_deliveryNoteNumber}" />
+                        <p:outputLabel value="#{bundle.CreateStockoutLabel_remarks}" for="remarks" />
+                        <p:inputText id="remarks" value="#{stockoutController.selected.remarks}" title="#{bundle.CreateStockoutTitle_remarks}" />
+                    </p:panelGrid>
+                    <p:commandButton action="#{stockoutController.create}" value="#{bundle.Save}" update="display,:StockoutListForm:datalist,:growl" oncomplete="handleSubmit(args,'StockoutCreateDialog');">
+                        <f:setPropertyActionListener target="#{stockoutController.selected.autostamp}" value="#{stockoutController.currentDateTime}"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="StockoutCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

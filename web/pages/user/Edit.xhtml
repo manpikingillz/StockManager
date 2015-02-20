@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserEditDlg" widgetVar="UserEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUserTitle}">
+            <h:form id="UserEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUserLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{userController.selected.firstName}" title="#{bundle.EditUserTitle_firstName}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_firstName}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{userController.selected.lastName}" title="#{bundle.EditUserTitle_lastName}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_lastName}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_phone1}" for="phone1" />
+                        <p:inputText id="phone1" value="#{userController.selected.phone1}" title="#{bundle.EditUserTitle_phone1}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_phone1}"/>
+                        <p:outputLabel value="#{bundle.EditUserLabel_phone2}" for="phone2" />
+                        <p:inputText id="phone2" value="#{userController.selected.phone2}" title="#{bundle.EditUserTitle_phone2}" />
+                        <p:outputLabel value="#{bundle.EditUserLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{userController.selected.email}" title="#{bundle.EditUserTitle_email}" />
+                        <p:outputLabel value="#{bundle.EditUserLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{userController.selected.username}" title="#{bundle.EditUserTitle_username}" />
+                        <p:outputLabel value="#{bundle.EditUserLabel_password}" for="password" />
+                        <p:password id="password" value="#{userController.selected.password}" title="#{bundle.EditUserTitle_password}" />
+                        <p:outputLabel value="#{bundle.EditUserLabel_jobtitleId}" for="jobtitleId" />
+                        <p:selectOneMenu id="jobtitleId" value="#{userController.selected.jobtitleId}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_jobtitleId}">
+                            <f:selectItems value="#{jobtitleController.itemsAvailableSelectOne}"
+                                           var="jobtitleIdItem"
+                                           itemValue="#{jobtitleIdItem}"
+                                           itemLabel="#{jobtitleIdItem.jobtitleName}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.ListDepartmentTitle_departmentName}" for="departmentId" />
+                        <p:selectOneMenu id="departmentId" value="#{userController.selected.departmentId}" required="true" requiredMessage="#{bundle.EditUserRequiredMessage_departmentId}">
+                            <f:selectItems value="#{departmentController.itemsAvailableSelectOne}"
+                                           var="departmentIdItem"
+                                           itemValue="#{departmentIdItem}"
+                                           itemLabel="#{departmentIdItem.departmentName}"
+                                           />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userController.update}" value="#{bundle.Save}" update="display,:UserListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UserEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UserEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
